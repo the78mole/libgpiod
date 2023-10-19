@@ -37,7 +37,9 @@ BuildRequires:  gcc-c++
 BuildRequires:  libkmod-devel
 BuildRequires:  libtool
 BuildRequires:  make
-BuildRequires:  python3-devel >= 3.5
+BuildRequires:  python39
+BuildRequires:  python39-base
+BuildRequires:  python39-devel
 BuildRequires:  kernel-devel >= 4.8
 
 %description
@@ -128,8 +130,9 @@ Python binding part.
 ./autogen.sh
 %configure \
 	--enable-tools=yes \
-	--enable-bindings-python \
 	--enable-bindings-cxx
+# need to exclude python bindings since python39 is not correctly recognized
+#	--enable-bindings-python
 make %{?_smp_mflags}
 
 %install
