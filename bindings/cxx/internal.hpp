@@ -65,7 +65,7 @@ using edge_event_buffer_ptr = ::std::unique_ptr<::gpiod_edge_event_buffer,
 
 struct chip::impl
 {
-	impl(const ::std::filesystem::path& path);
+	impl(const ::std::__FSNS__::path& path);
 	impl(const impl& other) = delete;
 	impl(impl&& other) = delete;
 	impl& operator=(const impl& other) = delete;

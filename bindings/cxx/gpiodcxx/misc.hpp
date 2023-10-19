@@ -27,7 +27,7 @@ namespace gpiod {
  * @return True if the file exists and is a GPIO chip character device or a
  *         symbolic link to it.
  */
-bool is_gpiochip_device(const ::std::filesystem::path& path);
+bool is_gpiochip_device(const ::std::__FSNS__::path& path);
 
 /**
  * @brief Get the human readable version string for libgpiod API

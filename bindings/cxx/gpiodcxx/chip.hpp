@@ -15,7 +15,13 @@
 #include <chrono>
 #include <cstddef>
 #include <iostream>
+#if __GNUG__ > 7
 #include <filesystem>
+#define __FSNS__ filesystem
+#else
+#include <experimental/filesystem>
+#define __FSNS__ experimental::filesystem
+#endif
 #include <memory>
 
 #include "line.hpp"
@@ -47,7 +53,7 @@ public:
 	 *        indicated by the \p path argument.
 	 * @param path Path to the device file to open.
 	 */
-	explicit chip(const ::std::filesystem::path& path);
+	explicit chip(const ::std::__FSNS__::path& path);
 
 	/**
 	 * @brief Move constructor.
@@ -86,7 +92,7 @@ public:
 	 * @brief Get the filesystem path that was used to open this GPIO chip.
 	 * @return Path to the underlying character device file.
 	 */
-	::std::filesystem::path path() const;
+	::std::__FSNS__::path path() const;
 
 	/**
 	 * @brief Get information about the chip.

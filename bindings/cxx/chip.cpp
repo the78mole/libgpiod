@@ -10,7 +10,7 @@ namespace gpiod {
 
 namespace {
 
-chip_ptr open_chip(const ::std::filesystem::path& path)
+chip_ptr open_chip(const ::std::__FSNS__::path& path)
 {
 	chip_ptr chip(::gpiod_chip_open(path.c_str()));
 	if (!chip)
@@ -21,7 +21,7 @@ chip_ptr open_chip(const ::std::filesystem::path& path)
 
 } /* namespace */
 
-chip::impl::impl(const ::std::filesystem::path& path)
+chip::impl::impl(const ::std::__FSNS__::path& path)
 	: chip(open_chip(path))
 {
 
@@ -33,7 +33,7 @@ void chip::impl::throw_if_closed() const
 		throw chip_closed("GPIO chip has been closed");
 }
 
-GPIOD_CXX_API chip::chip(const ::std::filesystem::path& path)
+GPIOD_CXX_API chip::chip(const ::std::__FSNS__::path& path)
 	: _m_priv(new impl(path))
 {
 
@@ -75,7 +75,7 @@ GPIOD_CXX_API void chip::close()
 	this->_m_priv->chip.reset();
 }
 
-GPIOD_CXX_API ::std::filesystem::path chip::path() const
+GPIOD_CXX_API ::std::__FSNS__::path chip::path() const
 {
 	this->_m_priv->throw_if_closed();
 

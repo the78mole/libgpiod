@@ -5,7 +5,7 @@
 
 namespace gpiod {
 
-GPIOD_CXX_API bool is_gpiochip_device(const ::std::filesystem::path& path)
+GPIOD_CXX_API bool is_gpiochip_device(const ::std::__FSNS__::path& path)
 {
 	return ::gpiod_is_gpiochip_device(path.c_str());
 }
