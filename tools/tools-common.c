@@ -222,16 +222,20 @@ void print_event_time(uint64_t evtime, int format)
 	char *tz;
 
 	if (format) {
-		evtsec = evtime / 1000000000;
-		if (format == 2) {
-			localtime_r(&evtsec, &t);
-			tz = "";
+		if (format == 3) {
+			printf("%09" PRIu64 , evtime);
 		} else {
-			gmtime_r(&evtsec, &t);
-			tz = "Z";
+			evtsec = evtime / 1000000000;
+			if (format == 2) {
+				localtime_r(&evtsec, &t);
+				tz = "";
+			} else {
+				gmtime_r(&evtsec, &t);
+				tz = "Z";
+			}
+			strftime(tbuf, TIME_BUFFER_SIZE, "%FT%T", &t);
+			printf("%s.%09" PRIu64 "%s", tbuf, evtime % 1000000000, tz);
 		}
-		strftime(tbuf, TIME_BUFFER_SIZE, "%FT%T", &t);
-		printf("%s.%09" PRIu64 "%s", tbuf, evtime % 1000000000, tz);
 	} else {
 		printf("%" PRIu64 ".%09" PRIu64, evtime / 1000000000,
 		       evtime % 1000000000);

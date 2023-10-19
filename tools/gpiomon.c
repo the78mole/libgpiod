@@ -79,8 +79,10 @@ static void print_help(void)
 	printf("  %%o   GPIO line offset\n");
 	printf("  %%l   GPIO line name\n");
 	printf("  %%c   GPIO chip name\n");
+	printf("  %%d   numeric edge event type ('0' - rising or '1' - falling)\n");
 	printf("  %%e   numeric edge event type ('1' - rising or '2' - falling)\n");
 	printf("  %%E   edge event type ('rising' or 'falling')\n");
+	printf("  %%N   event timestamp as nanoseconds\n");
 	printf("  %%S   event timestamp as seconds\n");
 	printf("  %%U   event timestamp as UTC\n");
 	printf("  %%L   event timestamp as local time\n");
@@ -272,9 +274,15 @@ static void event_print_formatted(struct gpiod_edge_event *event,
 			fputs(get_chip_name(resolver, chip_num), stdout);
 			break;
 		case 'e':
+			// Prints '1' for a rising and '2' for a falling edge
 			printf("%d", evtype);
 			break;
+		case 'd':
+			// Prints '1' for a rising and '0' for a falling edge
+			printf("%d", evtype == 1 ? 1 : 0);
+			break;
 		case 'E':
+			// Prints 'rising' for a rising and 'falling' for a falling edge
 			if (evtype == GPIOD_EDGE_EVENT_RISING_EDGE)
 				fputs("rising", stdout);
 			else
@@ -287,15 +295,22 @@ static void event_print_formatted(struct gpiod_edge_event *event,
 			fputs(lname, stdout);
 			break;
 		case 'L':
+			// Prints the localtime (buggy, like system started in 1970)
 			print_event_time(evtime, 2);
+			break;
+		case 'N':
+			// Prints nanoseconds since system start
+			print_event_time(evtime, 3);
 			break;
 		case 'o':
 			printf("%u", offset);
 			break;
 		case 'S':
+			// Prints uptime in seconds (real number) with nanosecond resolution
 			print_event_time(evtime, 0);
 			break;
 		case 'U':
+			// Prints the UTC time (buggy, like system started in 1970 at 1 am)
 			print_event_time(evtime, 1);
 			break;
 		case '%':
