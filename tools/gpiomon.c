@@ -63,6 +63,7 @@ static void print_help(void)
 	printf("  -l, --active-low\ttreat the line as active low, flipping the sense of\n");
 	printf("\t\t\trising and falling edges\n");
 	printf("      --localtime\tformat event timestamps as local time\n");
+	printf("        Only makes sense with `-E realtime`\n");
 	printf("  -n, --num-events <num>\n");
 	printf("\t\t\texit after processing num events\n");
 	printf("  -p, --debounce-period <period>\n");
@@ -71,6 +72,7 @@ static void print_help(void)
 	printf("  -s, --strict\t\tabort if requested line names are not unique\n");
 	printf("      --unquoted\tdon't quote line or consumer names\n");
 	printf("      --utc\t\tformat event timestamps as UTC (default for 'realtime')\n");
+	printf("        Only makes sense with `-E realtime`\n");
 	printf("  -v, --version\t\toutput version information and exit\n");
 	print_chip_help();
 	print_period_help();
@@ -86,6 +88,9 @@ static void print_help(void)
 	printf("  %%S   event timestamp as seconds\n");
 	printf("  %%U   event timestamp as UTC\n");
 	printf("  %%L   event timestamp as local time\n");
+	printf("\n");
+	printf("Example:\n");
+	printf("  gpiomon -e both -F \"[%%N] %%l %%d %%E\" -p 10 -b pull-up --banner GPIO17 GPIO27\n");
 }
 
 static int parse_edges_or_die(const char *option)
